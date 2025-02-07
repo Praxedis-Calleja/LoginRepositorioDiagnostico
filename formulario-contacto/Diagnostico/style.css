@@ -1,0 +1,36 @@
+.btn-radio input {
+    display: none;
+}
+.btn-radio {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: inline-block;
+    background-color: #fff;
+    transition: 0.3s;
+}
+.btn-radio input:checked + label {
+    background-color: #e6f4ea; /* Verde suave */
+    border-color: #28a745;
+    color: #28a745;
+}
+.btn-radio label {
+    margin: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.btn-radio label::before {
+    content: "";
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid #ced4da;
+    display: inline-block;
+}
+.btn-radio input:checked + label::before {
+    border-color: #28a745;
+    background: radial-gradient(circle, #28a745 40%, transparent 50%);
+}

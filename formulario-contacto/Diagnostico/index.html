@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  
+  <title>Formulario de contacto</title>
+
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+  <style>
+    body {
+        background-color: #e6f4ea;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+    .contact-form {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+    }
+    
+    @media (max-width: 375px) {
+        .contact-form {
+            width: 90%;
+            padding: 20px;
+        }
+    }
+    @media (min-width: 1440px) {
+        .contact-form {
+            max-width: 600px;
+        }
+    }
+    .btn-radio input {
+        display: none;
+    }
+    .btn-radio {
+        border: 1px solid #ced4da;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        display: inline-block;
+        background-color: #fff;
+        transition: 0.3s;
+        width: 100%;
+        
+        
+    }
+    .btn-radio input:checked{
+        background-color: #e6f4ea;
+        border-color: #28a745;
+        color: #28a745;
+    }
+    .btn-radio label {
+        margin: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .btn-radio label::before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 2px solid #ced4da;
+        display: inline-block;
+    }
+    .btn-radio input:checked + label::before {
+        border-color: #28a745;
+        background: radial-gradient(circle, #28a745 40%, transparent 50%);
+    }
+    .form-check-input {
+        width: 16px;
+        height: 16px;
+    }
+    .btn-submit {
+        background-color: #007a5c;
+        color: white;
+        border-radius: 5px;
+        padding: 10px;
+        width: 100%;
+    }
+    #successMessage {
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #1b4332;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      font-weight: bold;
+      transition: opacity 0.5s ease-in-out;
+  }
+  </style>
+ 
+</head>
+<body>
+  <div id="successMessage" class="alert alert-success text-center" style="display: none;">
+    <strong>¡Mensaje enviado!</strong> Gracias por completar el formulario. Nos pondremos en contacto pronto.
+  </div>
+<div class="contact-form">
+
+  <h4 class="text-center">Contecte con nosotros</h4>
+  <form action="server/submit.php" method="POST">
+    <div class="form-group">
+      <label for="firstName">Nombres *</label>
+      <input type="text" class="form-control"  name="first_name" id="firstName" required>
+    </div>
+    <div class="form-group">
+      <label for="lastName">Apellidos *</label>
+      <input type="text" class="form-control" name="last_name" id="lastName" required>
+    </div>
+    <div class="form-group">
+      <label for="email">Email *</label>
+      <input type="email" class="form-control" name="email" id="email" required>
+    </div>
+
+    <label class="d-block font-weight-bold mb-2">Query Type *</label>
+    <div class="d-flex mb-3 justify-content-center" >
+      <div class="btn-radio mr-2 ">
+        <input type="radio" id="general" name="query_type" checked>
+        <label for="general">General Enquiry</label>
+      </div>
+      <div class="btn-radio">
+        <input type="radio" id="support" name="query_type">
+        <label for="support">Support Request</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="message">Mensaje *</label>
+      <textarea class="form-control" id="message"  name="message" rows="3" required></textarea>
+    </div>
+
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox"  name="consent" id="consentCheck">
+      <label class="form-check-label" for="consentCheck">
+        I consent to being contacted by the team
+      </label>
+    </div>
+    
+    <button class="btn btn-submit" type="submit" id="Submit">Submit</button>
+
+  </form>
+</div>
+
+</body>
+<script>
+  window.onload = function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const successMessage = document.getElementById("successMessage");
+
+    if (urlParams.has('success')) {
+      successMessage.style.display = "block"; // Mostrar mensaje
+      successMessage.style.opacity = "1"; // Asegurar visibilidad
+
+      setTimeout(() => {
+        successMessage.style.opacity = "0"; // Hacerlo desaparecer suavemente
+        setTimeout(() => {
+          successMessage.style.display = "none";
+          history.replaceState({}, document.title, window.location.pathname); // Limpiar la URL
+        }, 500); // Tiempo para la transición de opacidad
+      }, 5000); // Se oculta después de 5 segundos
+    }
+  };
+</script>
+</html>
